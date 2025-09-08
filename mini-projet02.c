@@ -1,51 +1,51 @@
-# include <stdio.h>
+#include <stdio.h>
 
-int main () {
-    int length = 4 ;
-    char word[4] = {'g','a','m','e'};
-    char hidden[4] = {'_','_','_','_'};
-    for (int i = 0; i < length ; i++)
-    {
+int main() {
+    int length = 4;
+    char word[4] = {'g', 'a', 'm', 'e'};
+    char hidden[4] = {'_', '_', '_', '_'};
+    for (int i = 0; i < length; i++) {
         printf("%c ", hidden[i]);
     }
-    printf("it's somthing you like \n");
-    printf("veuillez entre votre caracter\n");
+    printf("\nIt's something you like\n");
+    printf("Veuillez entrer votre caractere:\n");
     const int max_attempts = 5;
     int attempts = 0;
-    int count = 0 ;
-    int taille = 0 ;
-    for (int i = 0; i < 10 ; i++)
-    {
+    int found = 0;
+
+    while (attempts < max_attempts && found < length) {
         char lettre;
-        scanf("%c",&lettre);
-        for (int j = 0; j < length; j++)
-        {
-            if (lettre == word[j])
-            {
+        scanf(" %c", &lettre);
+
+        int correct = 0;
+        for (int j = 0; j < length; j++) {
+            if (lettre == word[j] && hidden[j] == '_') {
                 hidden[j] = lettre;
-                taille++;
-                i--;
-                count = 1;
-                if (taille == length)
-                {
-                    printf("vous avez gagne\n");
-                    return 0 ;
-                }
-                for (int k = 0; k < length ; k++)
-                {
-                    printf("%c ", hidden[k]);
-                }
-                printf("c'est juste\n");
-                break ;
+                found++;
+                correct = 1;
             }
         }
-        if (count == 1)
-        {
-            attempts++;
-            printf("c'est faux il vous reste %d tentatives\n", max_attempts - attempts);
+
+        for (int k = 0; k < length; k++) {
+            printf("%c ", hidden[k]);
         }
-        printf("veuillez entre votre caracter \n");
-        count = 0;
+        printf("\n");
+
+        if (correct) {
+            printf("C'est juste!\n");
+        } else {
+            attempts++;
+            printf("C'est faux, il vous reste %d tentatives\n", max_attempts - attempts);
+        }
+
+        if (found == length) {
+            printf("Vous avez gagne!\n");
+            return 0;
+        }
+        if (attempts < max_attempts)
+            printf("Veuillez entrer votre caractere:\n");
     }
-    return 0 ;
+
+    printf("Vous avez perdu!\n");
+    return 0;
 }
